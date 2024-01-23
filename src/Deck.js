@@ -11,7 +11,7 @@
  *  DeckOfCardsGame -> Deck -> SingleCard
  */
 
-function Deck({ deckId }) {
+function Deck({ deck }) {
 
 }
 
