@@ -18,43 +18,27 @@ const BASE_URL_DRAW_CARD_API = `https://deckofcardsapi.com/api/deck/`;
 
 function Deck({ deckId }) {
   console.log("deck renders, deckId prop:", deckId);
-
-  const [card, setCard] = useState({
-    data: null,
-    isLoading: false
-  });
+  const [card, setCard] = useState({})
 
   console.log("state - card data:", card);
 
   /** When user clicks button, calls API to draw a card */
   async function drawCard() {
-    setCard({
-      data: null,
-      isLoading: true,
-    })
     const resp = await fetch(`BASE_URL_DRAW_CARD_API${deckId}/draw/?count=1`);
     const cardResult = await resp.json(); // this comes back as deck.data
-    setCard({
-      data: cardResult,
-      isLoading: false,
-    });
+    console.log('This is cardResult', cardResult);
+    setCard(cardResult);
   }
 
-  if (!card.isLoading) {
-    return (
-      <div>
-        <button onClick={drawCard}>Draw a card</button>
-        {card.data && <p>{`suit: ${card.cards[0].suit}, value: ${card.cards[0].value}`}</p>}
+  console.log('This is card', card);
 
-      </div>
-    );
-  } else {
-    return <i>Loading...</i>; // function guard?
-  }
+return (
+  <div>
+    <button onClick={drawCard}>Draw a card</button>
+    {/* <p>{`suit: ${card.cards[0].suit}, value: ${card.cards[0].value}`}</p>} */}
 
-
-
-
+  </div>
+);
 }
 
 // TODO: add back to code
