@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Deck from "./Deck";
 
-
 const NEW_DECK_API = `https://deckofcardsapi.com/api/deck/new/`;
-const DRAW_CARD_API = `https://deckofcardsapi.com/api/deck/<<deck_id>>/draw/?count=2`;
 
 /** DeckOfCardsGame: component to render game
+ *
+ *  Makes a call to deckofcards API to get a deck of cards.
  *
  *  Props: none
  *
@@ -25,7 +25,7 @@ function DeckOfCardsGame() {
   useEffect(function fetchNewDeckWhenMounted() {
     async function fetchDeck() {
       const resp = await fetch(NEW_DECK_API);
-      const deckResult = await resp.json();
+      const deckResult = await resp.json(); // this comes back as deck.data
       setDeck({
         data: deckResult,
         isLoading: false,
@@ -35,10 +35,10 @@ function DeckOfCardsGame() {
   }, []);
 
   if (deck.isLoading) return <i>Loading...</i>;
-
+  console.log("look here! deckId=", deck.data.deck_id);
   return (
       <div>
-        <Deck deck={deck} />
+        <Deck deckId={deck.data.deck_id} />
         <b>{deck.data.name}</b>
       </div>
   );
